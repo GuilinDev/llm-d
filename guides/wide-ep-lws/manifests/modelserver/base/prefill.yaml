@@ -23,6 +23,7 @@ spec:
           llm-d.ai/model: DeepSeek-R1-0528
           llm-d.ai/role: prefill
       spec:
+        terminationGracePeriodSeconds: 130
         serviceAccountName: deepseek-r1
         volumes:
           - name: dshm
@@ -147,6 +148,10 @@ spec:
               - containerPort: 5600
                 name: nixl
                 protocol: TCP
+            lifecycle:
+              preStop:
+                sleep:
+                  seconds: 30
             startupProbe:
               httpGet:
                 path: /health

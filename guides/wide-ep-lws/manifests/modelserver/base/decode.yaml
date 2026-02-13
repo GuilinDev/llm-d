@@ -23,6 +23,7 @@ spec:
           llm-d.ai/model: DeepSeek-R1-0528
           llm-d.ai/role: decode
       spec:
+        terminationGracePeriodSeconds: 130
         serviceAccountName: deepseek-r1
         initContainers:
           - name: routing-proxy
@@ -175,6 +176,10 @@ spec:
               - containerPort: 5600
                 name: nixl
                 protocol: TCP
+            lifecycle:
+              preStop:
+                sleep:
+                  seconds: 30
             startupProbe:
               httpGet:
                 path: /health
